@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meta Agent CX — AI-Powered CX Agent Builder</title>
+  <meta name="description" content="Create and deploy CX phone agents through natural language. Powered by AI Meta Agent technology." />
+  <link rel="stylesheet" href="/static/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
+</head>
+<body>
+  <div class="app-container">
+
+    <!-- ── Header ── -->
+    <header class="app-header">
+      <div class="header-badge">
+        <span class="dot"></span>
+        META AGENT CX — AI Agent Builder
+      </div>
+      <h1 class="app-title">Create CX Agents with AI</h1>
+      <p class="app-subtitle">
+        Describe your ideal phone support agent in plain English. Our Meta Agent generates
+        the complete configuration — persona, voice, intents, flows &amp; API integrations.
+      </p>
+    </header>
+
+    <!-- ── Main Grid ── -->
+    <div class="main-grid">
+
+      <!-- Input Card -->
+      <section class="card" id="input-card">
+        <div class="card-header">
+          <div class="card-icon">✏️</div>
+          <div>
+            <div class="card-title">Describe Your Agent</div>
+            <div class="card-description">Natural language → production-ready config</div>
+          </div>
+        </div>
+
+        <!-- Quick Prompts -->
+        <div class="quick-prompts">
+          <div class="quick-prompts-label">Quick Start Templates</div>
+          <div class="quick-prompts-grid">
+            <button class="quick-prompt-chip" data-prompt="Create a support bot for appointment booking. It should greet, ask for name and date, and confirm availability via an API.">📅 Appointment Booking</button>
+            <button class="quick-prompt-chip" data-prompt="Build a customer support agent for e-commerce that can track orders, process returns, and answer product questions.">📦 E-Commerce Support</button>
+            <button class="quick-prompt-chip" data-prompt="Create a banking phone agent that helps customers check account balances, recent transactions, and report lost cards.">🏦 Banking Assistant</button>
+            <button class="quick-prompt-chip" data-prompt="Design a food delivery support bot that handles order status checks, delivery complaints, and restaurant recommendations.">🍕 Food Delivery</button>
+            <button class="quick-prompt-chip" data-prompt="Build a healthcare appointment scheduling bot that collects patient info, checks doctor availability, and sends confirmations.">🏥 Healthcare Bot</button>
+          </div>
+        </div>
+
+        <!-- Text Input -->
+        <div class="input-group">
+          <label class="input-label" for="user-prompt">Agent Description</label>
+          <textarea class="text-input" id="user-prompt" placeholder="Example: Create a support bot for appointment booking. It should greet, ask for name and date, and confirm availability via an API."></textarea>
+        </div>
+
+        <!-- Options Row -->
+        <div class="row-inputs">
+          <div class="input-group">
+            <label class="input-label" for="language-select">Language</label>
+            <select class="select-input" id="language-select">
+              <option value="en-US" selected>English (US)</option>
+              <option value="en-GB">English (UK)</option>
+              <option value="es-ES">Spanish</option>
+              <option value="fr-FR">French</option>
+              <option value="de-DE">German</option>
+              <option value="hi-IN">Hindi</option>
+              <option value="ja-JP">Japanese</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label class="input-label" for="platform-select">Platform</label>
+            <select class="select-input" id="platform-select">
+              <option value="voiceowl" selected>VoiceOwl</option>
+              <option value="twilio">Twilio</option>
+              <option value="vonage">Vonage</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button class="btn-primary" id="create-btn" type="button">
+          <span id="btn-text">🚀 Generate CX Agent</span>
+          <div class="spinner" id="btn-spinner" style="display:none"></div>
+        </button>
+      </section>
+
+      <!-- Architecture Card -->
+      <section class="card" id="arch-card">
+        <div class="card-header">
+          <div class="card-icon">🏗️</div>
+          <div>
+            <div class="card-title">System Architecture</div>
+            <div class="card-description">How the Meta Agent processes your request</div>
+          </div>
+        </div>
+        <div class="arch-diagram">
+┌─────────────────────────────────────────┐
+│         User Natural Language           │
+│   "Create a support bot for..."         │
+└──────────────────┬──────────────────────┘
+                   │
+                   ▼
+┌──────────────────────────────────────┐
+│       🧠 META ORCHESTRATOR          │
+│  ┌────────────────────────────────┐  │
+│  │ • Domain Detection             │  │
+│  │ • Task Extraction              │  │
+│  │ • Requirement Analysis         │  │
+│  │ • Flow Summarization           │  │
+│  └────────────────────────────────┘  │
+└──────────────┬───────────────────────┘
+          ┌────┴────┐
+          ▼         ▼
+┌──────────────┐ ┌─────────────────┐
+│ 🤖 AGENT    │ │ ⚡ FUNCTION     │
+│   CREATOR   │ │   CREATOR       │
+│             │ │                 │
+│ • Persona   │ │ • API Endpoints │
+│ • Voice     │ │ • Parameters    │
+│ • Intents   │ │ • Mock Data     │
+│ • Flow Graph│ │ • OpenAI Schema │
+└──────┬──────┘ └───────┬─────────┘
+       │                │
+       └───────┬────────┘
+               ▼
+┌──────────────────────────────────────┐
+│      📋 MERGE & VALIDATE            │
+│  Produces CXAgentConfig (JSON)      │
+│  Ready for VoiceOwl / Twilio / etc. │
+└──────────────────────────────────────┘</div>
+      </section>
+
+      <!-- Output Section (hidden until results) -->
+      <section class="output-panel" id="output-panel" style="display:none">
+
+        <!-- Stats Bar -->
+        <div class="stats-bar" id="stats-bar"></div>
+
+        <!-- Tabs -->
+        <div class="output-tabs" id="output-tabs">
+          <button class="output-tab active" data-tab="persona">👤 Persona</button>
+          <button class="output-tab" data-tab="flow">🔀 Flow</button>
+          <button class="output-tab" data-tab="functions">⚡ Functions</button>
+          <button class="output-tab" data-tab="tools">🔧 OpenAI Tools</button>
+          <button class="output-tab" data-tab="full-json">{ } Full JSON</button>
+        </div>
+
+        <!-- Tab Panels -->
+        <div class="output-content" id="output-content">
+
+          <!-- Persona Tab -->
+          <div class="tab-panel active" id="tab-persona"></div>
+
+          <!-- Flow Tab -->
+          <div class="tab-panel" id="tab-flow"></div>
+
+          <!-- Functions Tab -->
+          <div class="tab-panel" id="tab-functions"></div>
+
+          <!-- OpenAI Tools Tab -->
+          <div class="tab-panel" id="tab-tools" style="position:relative"></div>
+
+          <!-- Full JSON Tab -->
+          <div class="tab-panel" id="tab-full-json" style="position:relative"></div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      Meta Agent CX v1.0.0 — AI-powered CX agent creation platform.<br/>
+      Built with FastAPI &amp; ❤️
+    </footer>
+  </div>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,738 @@
+{
+  "input": {
+    "user_prompt": "Create a support bot for appointment booking. It should greet, ask for name and date, and confirm availability via an API.",
+    "language": "en-US",
+    "platform": "voiceowl"
+  },
+  "output": {
+    "success": true,
+    "message": "Successfully created CX agent 'MediBot' with 2 functions and 7 intents.",
+    "agent_config": {
+      "agent_id": "agent_0e63a8e283c4",
+      "version": "1.0.0",
+      "status": "draft",
+      "created_at": "2026-02-23T05:32:54.203766Z",
+      "persona": {
+        "name": "MediBot",
+        "role": "Healthcare Appointment & Patient Support Agent",
+        "personality_traits": [
+          "friendly",
+          "professional",
+          "helpful"
+        ],
+        "greeting_style": "warm",
+        "system_prompt": "You are MediBot, a friendly, professional, helpful Healthcare Appointment & Patient Support Agent specializing in healthcare. You handle phone conversations with customers and your primary tasks are:\n\n1. **Greeting**: Greet the caller and introduce the service\n2. **Collect Customer Name**: Collect the caller's name for personalization\n   - Collect: customer_name\n3. **Appointment Booking**: Book an appointment for the customer\n   - Collect: customer_name, preferred_date, preferred_time, service_type\n   - API Integration: Check available appointment slots and book an appointment\n4. **Confirm Availability**: Confirm availability via external system\n   - API Integration: Verify availability through the backend API\n\n## Conversation Guidelines\n- Always greet the caller warmly and introduce yourself by name.\n- Speak clearly and at a moderate pace.\n- Confirm information back to the caller before proceeding.\n- If you don't understand something, politely ask for clarification.\n- If you cannot help with a request, offer to transfer to a human agent.\n- Keep responses concise \u2014 callers prefer short, clear answers.\n- End every call by asking if there's anything else you can help with.\n\n## Error Handling\n- If an API call fails, apologize and offer to try again or escalate.\n- After 3 failed attempts to understand, escalate to a human.\n- Never make up information \u2014 only state what you know or can look up.\n\n## Tone\n- You are friendly, professional, helpful.\n- Match the caller's energy level while maintaining professionalism.\n- Use the caller's name once you have it to personalize the experience.",
+        "fallback_message": "I'm sorry, I didn't quite catch that. Could you please repeat what you said?",
+        "escalation_message": "I appreciate your patience. Let me connect you with a team member who can help you further. Please hold for just a moment.",
+        "max_retries": 3
+      },
+      "voice": {
+        "provider": "google",
+        "voice_id": "en-US-Neural2-F",
+        "gender": "female",
+        "language": "en-US",
+        "speaking_rate": 1.0,
+        "pitch": 0.0
+      },
+      "intents": [
+        {
+          "intent_id": "intent_c4bee03f",
+          "name": "greeting",
+          "description": "Caller greets the agent or starts the conversation",
+          "training_phrases": [
+            {
+              "text": "Hello",
+              "language": "en-US"
+            },
+            {
+              "text": "Hi there",
+              "language": "en-US"
+            },
+            {
+              "text": "Good morning",
+              "language": "en-US"
+            },
+            {
+              "text": "Hey",
+              "language": "en-US"
+            },
+            {
+              "text": "I need help",
+              "language": "en-US"
+            }
+          ],
+          "priority": 5
+        },
+        {
+          "intent_id": "intent_357531b4",
+          "name": "request_greeting",
+          "description": "Caller wants to: Greet the caller and introduce the service",
+          "training_phrases": [
+            {
+              "text": "I want to greet the caller and introduce the service",
+              "language": "en-US"
+            },
+            {
+              "text": "Can you help me greet the caller and introduce the service",
+              "language": "en-US"
+            },
+            {
+              "text": "I need to greeting",
+              "language": "en-US"
+            },
+            {
+              "text": "Please greet the caller and introduce the service",
+              "language": "en-US"
+            }
+          ],
+          "priority": 3
+        },
+        {
+          "intent_id": "intent_6e5f9e93",
+          "name": "request_collect_customer_name",
+          "description": "Caller wants to: Collect the caller's name for personalization",
+          "training_phrases": [
+            {
+              "text": "I want to collect the caller's name for personalization",
+              "language": "en-US"
+            },
+            {
+              "text": "Can you help me collect the caller's name for personalization",
+              "language": "en-US"
+            },
+            {
+              "text": "I need to collect customer name",
+              "language": "en-US"
+            },
+            {
+              "text": "Please collect the caller's name for personalization",
+              "language": "en-US"
+            }
+          ],
+          "priority": 3
+        },
+        {
+          "intent_id": "intent_4d8fa569",
+          "name": "request_appointment_booking",
+          "description": "Caller wants to: Book an appointment for the customer",
+          "training_phrases": [
+            {
+              "text": "I want to book an appointment for the customer",
+              "language": "en-US"
+            },
+            {
+              "text": "Can you help me book an appointment for the customer",
+              "language": "en-US"
+            },
+            {
+              "text": "I need to appointment booking",
+              "language": "en-US"
+            },
+            {
+              "text": "Please book an appointment for the customer",
+              "language": "en-US"
+            }
+          ],
+          "priority": 3
+        },
+        {
+          "intent_id": "intent_52b28c2c",
+          "name": "request_confirm_availability",
+          "description": "Caller wants to: Confirm availability via external system",
+          "training_phrases": [
+            {
+              "text": "I want to confirm availability via external system",
+              "language": "en-US"
+            },
+            {
+              "text": "Can you help me confirm availability via external system",
+              "language": "en-US"
+            },
+            {
+              "text": "I need to confirm availability",
+              "language": "en-US"
+            },
+            {
+              "text": "Please confirm availability via external system",
+              "language": "en-US"
+            }
+          ],
+          "priority": 3
+        },
+        {
+          "intent_id": "intent_71b1beda",
+          "name": "fallback",
+          "description": "Caller's request is not understood",
+          "training_phrases": [],
+          "priority": 0
+        },
+        {
+          "intent_id": "intent_aa5ee07b",
+          "name": "request_human_agent",
+          "description": "Caller wants to speak with a human",
+          "training_phrases": [
+            {
+              "text": "I want to talk to a person",
+              "language": "en-US"
+            },
+            {
+              "text": "Transfer me to a human",
+              "language": "en-US"
+            },
+            {
+              "text": "Can I speak with someone",
+              "language": "en-US"
+            },
+            {
+              "text": "Let me talk to a real person",
+              "language": "en-US"
+            }
+          ],
+          "priority": 8
+        }
+      ],
+      "functions": [
+        {
+          "function_id": "fn_f64410fa",
+          "name": "get_appointment_slots",
+          "description": "Check available appointment slots and book an appointment. This function is called during the conversation when the agent needs to check available appointment slots and book an appointment. Returns: List of available appointment slots with dates and times",
+          "parameters": [
+            {
+              "name": "customer_name",
+              "type": "string",
+              "description": "The customer's customer name",
+              "required": true,
+              "default": null,
+              "enum": null
+            },
+            {
+              "name": "preferred_date",
+              "type": "string",
+              "description": "The customer's preferred date",
+              "required": true,
+              "default": null,
+              "enum": null
+            },
+            {
+              "name": "preferred_time",
+              "type": "string",
+              "description": "The customer's preferred time",
+              "required": true,
+              "default": null,
+              "enum": null
+            },
+            {
+              "name": "service_type",
+              "type": "string",
+              "description": "The customer's service type",
+              "required": true,
+              "default": null,
+              "enum": null
+            }
+          ],
+          "returns_description": "List of available appointment slots with dates and times",
+          "api_endpoint": {
+            "url": "/api/v1/appointment/slots",
+            "method": "GET",
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "auth_type": "bearer",
+            "timeout_seconds": 10
+          },
+          "mock_response": {
+            "success": true,
+            "data": {
+              "available_slots": [
+                {
+                  "date": "2026-02-24",
+                  "time": "09:00 AM",
+                  "available": true
+                },
+                {
+                  "date": "2026-02-24",
+                  "time": "10:30 AM",
+                  "available": true
+                },
+                {
+                  "date": "2026-02-24",
+                  "time": "02:00 PM",
+                  "available": true
+                }
+              ],
+              "timezone": "America/New_York"
+            },
+            "message": "Available slots retrieved successfully"
+          }
+        },
+        {
+          "function_id": "fn_f2ccc656",
+          "name": "check_availability",
+          "description": "Verify availability through the backend API. This function is called during the conversation when the agent needs to verify availability through the backend api. Returns: Availability status with available options",
+          "parameters": [],
+          "returns_description": "Availability status with available options",
+          "api_endpoint": {
+            "url": "/api/v1/availability",
+            "method": "GET",
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "auth_type": "bearer",
+            "timeout_seconds": 10
+          },
+          "mock_response": {
+            "success": true,
+            "data": {
+              "result": "Operation 'check_availability' completed successfully",
+              "id": "RES-20260224-001",
+              "timestamp": "2026-02-24T10:30:00Z"
+            },
+            "message": "Check Availability completed successfully"
+          }
+        }
+      ],
+      "conversation_flow": {
+        "flow_id": "flow_cceaef2a",
+        "name": "healthcare_flow",
+        "description": "Conversation flow for MediBot handling Greeting, Collect Customer Name, Appointment Booking, Confirm Availability",
+        "entry_node_id": "node_greet",
+        "nodes": [
+          {
+            "node_id": "node_greet",
+            "type": "greeting",
+            "label": "Welcome Greeting",
+            "prompt_text": "Hello! Thank you for calling. My name is MediBot, and I'm here to help you today. How can I assist you?",
+            "collect_slot": null,
+            "function_call": null,
+            "transitions": [
+              {
+                "condition": "user_responds",
+                "target_node_id": "node_confirm"
+              }
+            ]
+          },
+          {
+            "node_id": "node_collect_customer_name",
+            "type": "collect_info",
+            "label": "Collect Customer Name",
+            "prompt_text": "Could I please have your name?",
+            "collect_slot": "customer_name",
+            "function_call": null,
+            "transitions": []
+          },
+          {
+            "node_id": "node_collect_customer_name",
+            "type": "collect_info",
+            "label": "Collect Customer Name",
+            "prompt_text": "Could I please have your name?",
+            "collect_slot": "customer_name",
+            "function_call": null,
+            "transitions": [
+              {
+                "condition": "slot_filled",
+                "target_node_id": "node_confirm"
+              },
+              {
+                "condition": "slot_filled",
+                "target_node_id": "node_collect_preferred_date"
+              }
+            ]
+          },
+          {
+            "node_id": "node_collect_preferred_date",
+            "type": "collect_info",
+            "label": "Collect Preferred Date",
+            "prompt_text": "When would you prefer to come in?",
+            "collect_slot": "preferred_date",
+            "function_call": null,
+            "transitions": [
+              {
+                "condition": "slot_filled",
+                "target_node_id": "node_collect_preferred_time"
+              }
+            ]
+          },
+          {
+            "node_id": "node_collect_preferred_time",
+            "type": "collect_info",
+            "label": "Collect Preferred Time",
+            "prompt_text": "What time works best for you?",
+            "collect_slot": "preferred_time",
+            "function_call": null,
+            "transitions": [
+              {
+                "condition": "slot_filled",
+                "target_node_id": "node_collect_service_type"
+              }
+            ]
+          },
+          {
+            "node_id": "node_collect_service_type",
+            "type": "collect_info",
+            "label": "Collect Service Type",
+            "prompt_text": "What type of service do you need?",
+            "collect_slot": "service_type",
+            "function_call": null,
+            "transitions": [
+              {
+                "condition": "slot_filled",
+                "target_node_id": "node_api_appointment_booking"
+              }
+            ]
+          },
+          {
+            "node_id": "node_api_appointment_booking",
+            "type": "api_call",
+            "label": "Call API for Appointment Booking",
+            "prompt_text": "One moment while I look that up for you...",
+            "collect_slot": null,
+            "function_call": "get_appointment_slots",
+            "transitions": [
+              {
+                "condition": "api_response_received",
+                "target_node_id": "node_decision_appointment_booking"
+              }
+            ]
+          },
+          {
+            "node_id": "node_decision_appointment_booking",
+            "type": "decision",
+            "label": "Check Appointment Booking Result",
+            "prompt_text": null,
+            "collect_slot": null,
+            "function_call": null,
+            "transitions": [
+              {
+                "condition": "success",
+                "target_node_id": "node_success_appointment_booking"
+              },
+              {
+                "condition": "failure",
+                "target_node_id": "node_failure_appointment_booking"
+              }
+            ]
+          },
+          {
+            "node_id": "node_success_appointment_booking",
+            "type": "response",
+            "label": "Appointment Booking \u2014 Success",
+            "prompt_text": "Great news! I've processed your appointment booking successfully.",
+            "collect_slot": null,
+            "function_call": null,
+            "transitions": [
+              {
+                "condition": "continue",
+                "target_node_id": "node_confirm"
+              }
+            ]
+          },
+          {
+            "node_id": "node_failure_appointment_booking",
+            "type": "response",
+            "label": "Appointment Booking \u2014 Failure",
+            "prompt_text": "I'm sorry, I wasn't able to complete your appointment booking at this time. Would you like me to transfer you to a team member?",
+            "collect_slot": null,
+            "function_call": null,
+            "transitions": [
+              {
+                "condition": "user_wants_transfer",
+                "target_node_id": "node_transfer"
+              },
+              {
+                "condition": "user_declines_transfer",
+                "target_node_id": "node_confirm"
+              }
+            ]
+          },
+          {
+            "node_id": "node_api_confirm_availability",
+            "type": "api_call",
+            "label": "Call API for Confirm Availability",
+            "prompt_text": "One moment while I look that up for you...",
+            "collect_slot": null,
+            "function_call": "get_appointment_slots",
+            "transitions": [
+              {
+                "condition": "api_response_received",
+                "target_node_id": "node_decision_confirm_availability"
+              }
+            ]
+          },
+          {
+            "node_id": "node_decision_confirm_availability",
+            "type": "decision",
+            "label": "Check Confirm Availability Result",
+            "prompt_text": null,
+            "collect_slot": null,
+            "function_call": null,
+            "transitions": [
+              {
+                "condition": "success",
+                "target_node_id": "node_success_confirm_availability"
+              },
+              {
+                "condition": "failure",
+                "target_node_id": "node_failure_confirm_availability"
+              }
+            ]
+          },
+          {
+            "node_id": "node_success_confirm_availability",
+            "type": "response",
+            "label": "Confirm Availability \u2014 Success",
+            "prompt_text": "Great news! I've processed your confirm availability successfully.",
+            "collect_slot": null,
+            "function_call": null,
+            "transitions": [
+              {
+                "condition": "continue",
+                "target_node_id": "node_confirm"
+              }
+            ]
+          },
+          {
+            "node_id": "node_failure_confirm_availability",
+            "type": "response",
+            "label": "Confirm Availability \u2014 Failure",
+            "prompt_text": "I'm sorry, I wasn't able to complete your confirm availability at this time. Would you like me to transfer you to a team member?",
+            "collect_slot": null,
+            "function_call": null,
+            "transitions": [
+              {
+                "condition": "user_wants_transfer",
+                "target_node_id": "node_transfer"
+              },
+              {
+                "condition": "user_declines_transfer",
+                "target_node_id": "node_confirm"
+              }
+            ]
+          },
+          {
+            "node_id": "node_confirm",
+            "type": "confirm",
+            "label": "Confirm & Anything Else",
+            "prompt_text": "Is there anything else I can help you with today?",
+            "collect_slot": null,
+            "function_call": null,
+            "transitions": [
+              {
+                "condition": "nothing_else",
+                "target_node_id": "node_end"
+              },
+              {
+                "condition": "has_more_questions",
+                "target_node_id": "node_greet"
+              }
+            ]
+          },
+          {
+            "node_id": "node_fallback",
+            "type": "fallback",
+            "label": "Fallback / Didn't Understand",
+            "prompt_text": "I'm sorry, I didn't quite catch that. Could you please repeat what you said?",
+            "collect_slot": null,
+            "function_call": null,
+            "transitions": [
+              {
+                "condition": "retry",
+                "target_node_id": "node_greet"
+              }
+            ]
+          },
+          {
+            "node_id": "node_transfer",
+            "type": "transfer",
+            "label": "Transfer to Human Agent",
+            "prompt_text": "I appreciate your patience. Let me connect you with a team member who can help you further. Please hold for just a moment.",
+            "collect_slot": null,
+            "function_call": null,
+            "transitions": [
+              {
+                "condition": "transferred",
+                "target_node_id": "node_end"
+              }
+            ]
+          },
+          {
+            "node_id": "node_end",
+            "type": "end",
+            "label": "End Call",
+            "prompt_text": "Thank you for calling! Have a wonderful day. Goodbye!",
+            "collect_slot": null,
+            "function_call": null,
+            "transitions": []
+          }
+        ]
+      },
+      "deployment": {
+        "platform": "voiceowl",
+        "phone_number": null,
+        "webhook_url": null,
+        "environment": "staging",
+        "max_concurrent_calls": 10,
+        "recording_enabled": true,
+        "analytics_enabled": true
+      },
+      "metadata": {
+        "source_prompt": "healthcare",
+        "generation_mode": "rule_based"
+      }
+    },
+    "openai_tools_schema": [
+      {
+        "type": "function",
+        "function": {
+          "name": "get_appointment_slots",
+          "description": "Check available appointment slots and book an appointment. This function is called during the conversation when the agent needs to check available appointment slots and book an appointment. Returns: List of available appointment slots with dates and times",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "customer_name": {
+                "type": "string",
+                "description": "The customer's customer name"
+              },
+              "preferred_date": {
+                "type": "string",
+                "description": "The customer's preferred date"
+              },
+              "preferred_time": {
+                "type": "string",
+                "description": "The customer's preferred time"
+              },
+              "service_type": {
+                "type": "string",
+                "description": "The customer's service type"
+              }
+            },
+            "required": [
+              "customer_name",
+              "preferred_date",
+              "preferred_time",
+              "service_type"
+            ]
+          }
+        }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "check_availability",
+          "description": "Verify availability through the backend API. This function is called during the conversation when the agent needs to verify availability through the backend api. Returns: Availability status with available options",
+          "parameters": {
+            "type": "object",
+            "properties": {},
+            "required": []
+          }
+        }
+      }
+    ],
+    "raw_analysis": {
+      "domain": "healthcare",
+      "agent_name_suggestion": "MediBot",
+      "agent_role": "Healthcare Appointment & Patient Support Agent",
+      "personality_traits": [
+        "friendly",
+        "professional",
+        "helpful"
+      ],
+      "greeting_style": "warm",
+      "language": "en-US",
+      "voice_gender": "female",
+      "tasks": [
+        {
+          "keywords": [
+            "greet",
+            "welcome",
+            "hello",
+            "introduce"
+          ],
+          "task_name": "Greeting",
+          "description": "Greet the caller and introduce the service",
+          "data_to_collect": [],
+          "requires_api": false,
+          "api_description": ""
+        },
+        {
+          "task_name": "Collect Customer Name",
+          "description": "Collect the caller's name for personalization",
+          "data_to_collect": [
+            "customer_name"
+          ],
+          "requires_api": false,
+          "api_description": ""
+        },
+        {
+          "task_name": "Appointment Booking",
+          "description": "Book an appointment for the customer",
+          "data_to_collect": [
+            "customer_name",
+            "preferred_date",
+            "preferred_time",
+            "service_type"
+          ],
+          "requires_api": true,
+          "api_description": "Check available appointment slots and book an appointment"
+        },
+        {
+          "task_name": "Confirm Availability",
+          "description": "Confirm availability via external system",
+          "data_to_collect": [],
+          "requires_api": true,
+          "api_description": "Verify availability through the backend API"
+        }
+      ],
+      "functions_needed": [
+        {
+          "name": "get_appointment_slots",
+          "purpose": "Check available appointment slots and book an appointment",
+          "input_params": [
+            {
+              "name": "customer_name",
+              "type": "string",
+              "description": "The customer's customer name"
+            },
+            {
+              "name": "preferred_date",
+              "type": "string",
+              "description": "The customer's preferred date"
+            },
+            {
+              "name": "preferred_time",
+              "type": "string",
+              "description": "The customer's preferred time"
+            },
+            {
+              "name": "service_type",
+              "type": "string",
+              "description": "The customer's service type"
+            }
+          ],
+          "expected_output": "List of available appointment slots with dates and times"
+        },
+        {
+          "name": "check_availability",
+          "purpose": "Verify availability through the backend API",
+          "input_params": [],
+          "expected_output": "Availability status with available options"
+        }
+      ],
+      "flow_summary": [
+        "Step 1: Greet the caller and introduce the service",
+        "Step 2: Ask for the customer's customer name",
+        "Step 3: Ask for the customer's customer name",
+        "Step 4: Ask for the customer's preferred date",
+        "Step 5: Ask for the customer's preferred time",
+        "Step 6: Ask for the customer's service type",
+        "Step 7: Check available appointment slots and book an appointment",
+        "Step 8: Communicate the result to the caller",
+        "Step 9: Verify availability through the backend API",
+        "Step 10: Communicate the result to the caller",
+        "Step 11: Ask if there's anything else",
+        "Step 12: End the call politely"
+      ],
+      "ambiguities": [],
+      "platform": "voiceowl"
+    }
+  }
+}
